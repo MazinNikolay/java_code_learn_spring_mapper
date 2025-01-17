@@ -3,16 +3,17 @@ package com.example.java_code_learn_oject_mapper.mapper;
 import com.example.java_code_learn_oject_mapper.model.Order;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class OrderMapperService {
-    @Autowired
     private static ObjectMapper objectMapper;
+
+    static{
+        objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
+    }
 
     public static String convertOrderToJson(Order order) {
         String json = "";
@@ -26,7 +27,7 @@ public class OrderMapperService {
 
     public static Order convertJsonToOrder(String json) {
         Order order = new Order();
-        try{
+        try {
             order = objectMapper.readValue(json, Order.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

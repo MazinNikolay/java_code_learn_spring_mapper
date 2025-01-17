@@ -3,16 +3,19 @@ package com.example.java_code_learn_oject_mapper.mapper;
 import com.example.java_code_learn_oject_mapper.model.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class ProductMapperService {
-    @Autowired
     private static ObjectMapper objectMapper;
+
+    static{
+        objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
+        objectMapper.registerModule(new JavaTimeModule());
+    }
 
     public static String convertProductToJson(Product product) {
         String json = "";
